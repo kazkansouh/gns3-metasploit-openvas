@@ -72,6 +72,12 @@ RUN apt-get update && \
 EXPOSE 80/tcp
 EXPOSE 9392/tcp
 
+# Setup emacs as default editor
+RUN apt-get update && \
+        DEBIAN_FRONTEND=noninteractive apt-get -qq -y install emacs && \
+        rm -rf /var/lib/apt/lists/*
+ENV EDITOR=emacs
+
 # Entrypoint starts up services
 COPY entrypoint.sh /
 
