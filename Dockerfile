@@ -29,7 +29,8 @@ RUN openvasmd --create-user metasploit --password metasploit && \
         mkdir -p /var/run/redis-openvas && \
         chown redis:redis /var/run/redis-openvas
 
-RUN     service openvas-manager start && \
+RUN     echo "DODTIME=35" >> /etc/default/openvas-scanner && \
+        service openvas-manager start && \
         service redis-server start && \
         service openvas-scanner start && \
         openvasmd --rebuild && \
