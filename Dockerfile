@@ -43,11 +43,11 @@ RUN     echo "DODTIME=35" >> /etc/default/openvas-scanner && \
 
 ## Approx 0.5GB
 RUN apt-get update && \
-        DEBIAN_FRONTEND=noninteractive apt-get -qq -y install postgresql less ruby-bundler thin vim && \
-        curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
-        chmod 755 msfinstall && \
-        ./msfinstall && \
-        rm msfinstall && \
+        DEBIAN_FRONTEND=noninteractive apt -qq -y install postgresql less ruby-bundler thin vim && \
+        curl --silent -L http://apt.metasploit.com/metasploit-framework.gpg.key | apt-key add && \
+        echo "deb http://downloads.metasploit.com/data/releases/metasploit-framework/apt buster main" > /etc/apt/sources.list.d/msf.list && \
+        apt-get update && \
+        DEBIAN_FRONTEND=noninteractive apt -qq -y install metasploit-framework && \
         rm -rf /var/lib/apt/lists/* && \
         service postgresql start && \
         ( \
